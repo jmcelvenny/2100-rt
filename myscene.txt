@@ -1,0 +1,67 @@
+window name view ;
+   windowwidth 8
+   windowheight 6
+   columns 400
+   viewpoint 0 -1 5
+   ambient 6 6 6 ;
+
+plane name plane1 ;
+   color 255 255 255
+   diffuse 0.5 0.5 0.5 ;
+   point 0 -3 0
+   orient1 1 1 0
+   orient2 0 0 1 ;
+
+plane name plane2 ;
+   color 234 106 32
+   diffuse 0.5 0.5 0.5 ;
+   point 0 -3 0
+   orient1 -1 1 0 
+   orient2 0 0 1;
+
+plane name backwall ;
+   color 82 45 128
+   diffuse 0.5 0.5 0.5 ;
+   point 1 0 -8
+   orient1 1 1 0
+   orient2 0 1 0 ;
+
+sphere name paw1 ;
+   color 246 67 33
+   diffuse 0.5 0.5 0.5 ;
+   center 0 0 -1
+   radius 1 ;
+
+sphere name paw2 ;
+   color 246 67 33
+   diffuse 0.5 0.5 0.5 ;
+   center .5 2 -1
+   radius .5 ;
+
+sphere name paw3 ;
+   color 246 67 33
+   diffuse 0.5 0.5 0.5 ;
+   center -.5 2 -1
+   radius .5 ;
+
+sphere name paw4 ;
+   color 246 67 33
+   diffuse 0.5 0.5 0.5 ;
+   center 1.5 1 -1
+   radius .5 ;
+
+sphere name paw5 ;
+   color 246 67 33
+   diffuse 0.5 0.5 0.5 ;
+   center -1.5 1 -1
+   radius .5 ;
+
+pointlight  name light1 ;
+  color 255 255 255
+  brightness 6 
+  center 0 2 0;
+
+pointlight  name light2 ;
+  color 255 255 255
+  brightness 6 
+  center 0 -2 0 ;
