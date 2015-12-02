@@ -85,8 +85,7 @@ int plane_t::hits(myvector_t base, myvector_t dir, hitinfo_t &hit) {
 
    t = (N.dot(Q) - N.dot(V)) / (N.dot(D));
 
-   H = V.sum(D.scale(t));
-
+   H = V + (D * t);
 
    if (t < 0) return 0;    
    if (H.getz() > 0) return 0;

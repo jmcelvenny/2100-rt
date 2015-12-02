@@ -89,15 +89,14 @@ myvector_t raytrace(scene_t *scene, myvector_t base, myvector_t unitDir,
   intensity = myvector_t(x, y, z);
 
   //reflectivity test
-   self = close;
 
 
    if (close->getreflective().getx() > 0 && bounce < MAX_BOUNCE) {
+      self = close;
       myvector_t v = reflect(newHit.getnormal(), unitDir);
       myvector_t result = raytrace(scene, newHit.gethitpoint(), v, total_dist, ent, bounce+1);
       myvector_t res = myvector_t((x*result.getx()), (result.gety()*y), (result.getz()*z));
       intensity = intensity + res;
-
    } 
 
   return intensity;
@@ -125,7 +124,9 @@ entity_t *closest(scene_t *scene, myvector_t base,
 
    double mindist = 999999;
    int isHit;
-   
+
+   base = base + (unitDir * .01); //move it over a lil bit 
+
    list->reset();
    while(list->hasnext())
    {
