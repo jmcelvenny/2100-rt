@@ -93,9 +93,7 @@ myvector_t raytrace(scene_t *scene, myvector_t base, myvector_t unitDir,
 
 
    if (close->getreflective().getx() > 0 && bounce < MAX_BOUNCE) {
-      myvector_t u = unitDir * (-1);
-      myvector_t n = newHit.getnormal();
-      myvector_t v = (n*(u.dot(n)))*2 - u;
+      myvector_t v = reflect(newHit.getnormal(), unitDir);
       myvector_t result = raytrace(scene, newHit.gethitpoint(), v, total_dist, ent, bounce+1);
       myvector_t res = myvector_t((x*result.getx()), (result.gety()*y), (result.getz()*z));
       intensity = intensity + res;
@@ -112,6 +110,10 @@ myvector_t raytrace(scene_t *scene, myvector_t base,
   return raytrace(scene, base, unitDir, total_dist, self, 0);
 }
 
+myvector_t reflect(myvector_t n, myvector_t W) {
+      myvector_t u = W * (-1);
+      return (n*(u.dot(n)))*2 - u;
+}
 
 entity_t *closest(scene_t *scene, myvector_t base, 
             myvector_t unitDir, entity_t *self, hitinfo_t &hit) 
