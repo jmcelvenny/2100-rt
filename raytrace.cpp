@@ -10,7 +10,7 @@
 
 #include "raytrace.h"
 
-#define MAX_BOUNCE 1
+#define MAX_BOUNCE 3
 
 /** genRay **/
 myvector_t genRay(scene_t *scene, int column, int row) {
@@ -131,7 +131,7 @@ entity_t *closest(scene_t *scene, myvector_t base,
    while(list->hasnext())
    {
        obj = (entity_t *)list->get_entity();
-
+       
        isHit = obj->hits(base,unitDir,currhit);
        if(isHit)
        {

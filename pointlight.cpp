@@ -126,7 +126,10 @@ myvector_t pointlight_t::processLight(scene_t *scene,
    double o_test = ((center - hit.gethitpoint()).unitvec()).dot(hit.getnormal().unitvec());
    if (o_test < 0 ) return myvector_t(0,0,0);
 
-   entity_t *cl = closest(scene, center, dir, ent, temphit);
+   //reflectivity fix
+   point_t newcenter = center + (dir * .05);
+
+   entity_t *cl = closest(scene, newcenter, dir, ent, temphit);
    sobj_t *closestsobj = (sobj_t *)cl;
    if (cl != ent) return myvector_t(0,0,0);
 
