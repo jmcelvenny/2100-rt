@@ -10,8 +10,6 @@
 
 #include "raytrace.h"
 
-#define MAX_BOUNCE 20
-
 /** genRay **/
 myvector_t genRay(scene_t *scene, int column, int row) {
    double x;
@@ -46,7 +44,7 @@ myvector_t genRay(scene_t *scene, int column, int row) {
 
 /** rayTrace **/
 myvector_t raytrace(scene_t *scene, myvector_t base, myvector_t unitDir, 
-                double total_dist, entity_t *self, int bounce) {
+                double total_dist, entity_t *self) {
 
    double x;
    double y;
@@ -88,13 +86,10 @@ myvector_t raytrace(scene_t *scene, myvector_t base, myvector_t unitDir,
 
   intensity = myvector_t(x, y, z);
 
-  //reflectivity test
-
-
-   if (close->getreflective().getx() > 0 || close->getreflective().gety() > 0 || close->getreflective().getz() > 0) {
+  if (total_dist < 1000 && (close->getreflective().getx() > 0 || close->getreflective().gety() > 0 || close->getreflective().getz() > 0)) {
       self = close;
       myvector_t v = reflect(newHit.getnormal().unitvec(), unitDir);
-      myvector_t result = raytrace(scene, newHit.gethitpoint(), v, total_dist, self, bounce+1);
+      myvector_t result = raytrace(scene, newHit.gethitpoint(), v, total_dist, self);
       myvector_t res = myvector_t((x*result.getx()), (result.gety()*y), (result.getz()*z));
       intensity = intensity + res;
    } 
@@ -103,16 +98,11 @@ myvector_t raytrace(scene_t *scene, myvector_t base, myvector_t unitDir,
 
 } 
 
-myvector_t raytrace(scene_t *scene, myvector_t base, 
-                       myvector_t unitDir,
-                 double total_dist, entity_t *self) {
-  return raytrace(scene, base, unitDir, total_dist, self, 0);
-}
-
 myvector_t reflect(myvector_t n, myvector_t W) {
       myvector_t u = W * (-1);
       return (n*(u.dot(n)))*2 - u;
 }
+
 
 entity_t *closest(scene_t *scene, myvector_t base, 
             myvector_t unitDir, entity_t *self, hitinfo_t &hit) 
@@ -124,14 +114,12 @@ entity_t *closest(scene_t *scene, myvector_t base,
 
    double mindist = 999999;
    int isHit;
-
-   //base = base + (unitDir * .01); //move it over a lil bit 
-
+   
    list->reset();
    while(list->hasnext())
    {
        obj = (entity_t *)list->get_entity();
-       if (obj == self) continue;
+       if (self == obj) continue;
        isHit = obj->hits(base,unitDir,currhit);
        if(isHit)
        {

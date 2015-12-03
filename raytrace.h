@@ -8,14 +8,11 @@
 /** Prototype statements **/
 myvector_t raytrace(scene_t *scene, myvector_t base, 
                        myvector_t unitDir,
-                 double total_dist, entity_t *self, int bounce);
-myvector_t raytrace(scene_t *scene, myvector_t base, 
-                       myvector_t unitDir,
                  double total_dist, entity_t *self);
 entity_t       *closest(scene_t *scene, myvector_t base, 
                         myvector_t unitDir, 
                  entity_t *self, hitinfo_t &hit);
 myvector_t  genRay(scene_t *scene, int columnNdx, int rowIndx);
-myvector_t  reflect(myvector_t n, myvector_t W);
+myvector_t reflect(myvector_t n, myvector_t W);
 
 #endif
