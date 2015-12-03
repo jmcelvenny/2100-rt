@@ -10,7 +10,7 @@
 
 #include "raytrace.h"
 
-#define MAX_BOUNCE 3
+#define MAX_BOUNCE 20
 
 /** genRay **/
 myvector_t genRay(scene_t *scene, int column, int row) {
@@ -91,10 +91,10 @@ myvector_t raytrace(scene_t *scene, myvector_t base, myvector_t unitDir,
   //reflectivity test
 
 
-   if (close->getreflective().getx() > 0 && bounce < MAX_BOUNCE) {
+   if (close->getreflective().getx() > 0 || close->getreflective().gety() > 0 || close->getreflective().getz() > 0) {
       self = close;
-      myvector_t v = reflect(newHit.getnormal(), unitDir);
-      myvector_t result = raytrace(scene, newHit.gethitpoint(), v, total_dist, ent, bounce+1);
+      myvector_t v = reflect(newHit.getnormal().unitvec(), unitDir);
+      myvector_t result = raytrace(scene, newHit.gethitpoint(), v, total_dist, self, bounce+1);
       myvector_t res = myvector_t((x*result.getx()), (result.gety()*y), (result.getz()*z));
       intensity = intensity + res;
    } 
@@ -125,13 +125,13 @@ entity_t *closest(scene_t *scene, myvector_t base,
    double mindist = 999999;
    int isHit;
 
-   base = base + (unitDir * .01); //move it over a lil bit 
+   //base = base + (unitDir * .01); //move it over a lil bit 
 
    list->reset();
    while(list->hasnext())
    {
        obj = (entity_t *)list->get_entity();
-       
+       if (obj == self) continue;
        isHit = obj->hits(base,unitDir,currhit);
        if(isHit)
        {
