@@ -91,9 +91,9 @@ int plane_t::hits(myvector_t base, myvector_t dir, hitinfo_t &hit) {
    if (t < 0) return 0;    
    if (H.getz() > 0) return 0;
 
-   if (D.dot(hit.getnormal()) > 0) 
+   if (D.dot(N) > 0) 
    {
-      hit.getnormal() = (hit.getnormal()).scale(-1);
+      N = N * (-1);
    }
 
    hit.sethitpoint(H);

@@ -7,6 +7,7 @@ window name view ;
 
 plane name plane1 ;
    color 255 255 255
+   reflective 0.5 0.5 0.5;
    diffuse 0.5 0.5 0.5 ;
    point 0 -3 0
    orient1 1 1 0
@@ -14,6 +15,7 @@ plane name plane1 ;
 
 plane name plane2 ;
    color 234 106 32
+   reflective 0.5 0.5 0.5;
    diffuse 0.5 0.5 0.5 ;
    point 0 -3 0
    orient1 -1 1 0 
